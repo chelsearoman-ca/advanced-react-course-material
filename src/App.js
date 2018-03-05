@@ -18,8 +18,9 @@ componentDidUpdate(){ //updates everytime the component gets props or a new stat
 }
 
 componentWillUpdate(){//your chance to do anything before the next render happens, you can't set state (you'd use ComponentWillRecieveProps)
-const { scrollHeight, scrollTop, clientHeight } = document
-  this.scrolledUp = true
+const { scrollHeight, scrollTop, clientHeight } = document.documentElement
+  this.scrolledUp = scrollTop + clientHeight < scrollHeight // if the distance from the top plus the clientHeight is less than the scrollHeight
+  //then that means the user has scrolledUp
 }
 scroll(){
   window.scrollTo(0, document.documentElement.scrollHeight) //this is the imperative part where automative scrolling happens
@@ -55,7 +56,7 @@ class App extends Component {
             href="https://www.youtube.com/watch?v=VKHFZBUTA4k&list=RDVKHFZBUTA4k"
           >Sketch on YouTube</a>
         </div>
-        <PinScrollToBottom> {/*everytime this renders it gets a new list*/}
+        <PinScrollToBottom> 
           <ol className="messages">
             {messages.map((message, index) => (
               <FadeIn key={index}>
